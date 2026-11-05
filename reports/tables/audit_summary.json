@@ -1,0 +1,17 @@
+{
+  "training_answers": 4969,
+  "training_questions": 135,
+  "training_domains": 12,
+  "minority_answers": 23,
+  "minority_questions": 19,
+  "minority_domains": 9,
+  "unique_normalized_training_inputs": 4826,
+  "duplicate_groups": 82,
+  "duplicate_excess_rows": 143,
+  "conflicting_input_groups": 6,
+  "conflicting_rows": 15,
+  "train_ua_overlap_rows": 25,
+  "blank_fields": 0,
+  "median_answer_words": 11.0,
+  "source_sha256": "57c14e5c260d8cfd774f3fb954985d94bcfa3407029bfe585179650b907dbf9b"
+}

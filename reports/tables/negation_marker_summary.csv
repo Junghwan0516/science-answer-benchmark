@@ -1,0 +1,6 @@
+label,False,True,marker_percentage
+correct,1677,331,16.48406374501992
+partially_correct_incomplete,1136,188,14.19939577039275
+irrelevant,966,149,13.36322869955157
+contradictory,373,126,25.250501002004007
+non_domain,13,10,43.47826086956522

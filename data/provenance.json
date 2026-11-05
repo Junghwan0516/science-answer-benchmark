@@ -1,0 +1,8 @@
+{
+  "source_url": "https://raw.githubusercontent.com/myrosia/semeval-2013-task7/main/semeval-5way.zip",
+  "source_repository": "https://github.com/myrosia/semeval-2013-task7",
+  "source_sha256": "57c14e5c260d8cfd774f3fb954985d94bcfa3407029bfe585179650b907dbf9b",
+  "bundled_core_sha256": "35eb5118fcb0f4f98f68a6b72c585dd222c73ea2f3137d956e3e8aeab0bc7943",
+  "selection": "SciEntsBank only; official Core XML from all four splits; XML bytes unchanged; BEETLE, Extra, parses and reliability annotations excluded",
+  "dataset_license": "CC BY-SA 3.0 Unported"
+}

@@ -1,0 +1,13 @@
+domain,correct,partially_correct_incomplete,irrelevant,contradictory,non_domain
+EM,170,117,117,19,7
+FN,170,90,50,12,1
+II,69,65,72,7,0
+LF,91,165,94,42,1
+LP,34,1,22,13,0
+ME,377,179,153,114,5
+MS,126,42,76,6,2
+MX,231,214,154,95,3
+PS,249,118,86,90,2
+SE,220,143,111,64,1
+ST,107,80,92,4,0
+VB,164,110,88,33,1

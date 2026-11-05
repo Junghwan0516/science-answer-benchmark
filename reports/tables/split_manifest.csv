@@ -1,0 +1,5 @@
+official_split,answers,questions,domains,unique_normalized_inputs
+train,4969,135,12,4826
+test-unseen-answers,540,135,12,539
+test-unseen-questions,733,15,11,703
+test-unseen-domains,4562,46,3,4229
