@@ -32,3 +32,7 @@ The answer-weighted distribution weights every record equally. The question-weig
 The public historical English corpus does not establish suitability for Korean answers, essays, modern curricula, unseen populations, or automated educational decisions. Only 23 training responses are non-domain; small supports cause unstable future estimates. Many records share a question, so answer-level independence should not be assumed for inferential analysis. Official UQ has only 15 questions and no non-domain reference labels. UD contains only three held-out domain codes. Pretraining exposure of any future language model to this public corpus would be unknown without a separate audit.
 
 This release supports dataset understanding. Teacher time savings, learning gains, grading reliability, and production performance have not been measured.
+
+## Versioned development split
+
+Question-grouped development assignments are now available in `data/splits/v1`. The builder reads only `data/processed/train.csv`; it uses seed 42 and a first-eligible candidate rule based on training class counts and partition sizes. The resulting 95/20/20 questions contain 3,536/715/718 answer records. Primary data and labels are preserved. Full policy, overlap checks, minority-support limits, and the pending final-fit/calibration decision are documented in [docs/split_design.md](docs/split_design.md). This split design does not itself train a model or establish official benchmark performance.

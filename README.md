@@ -4,18 +4,35 @@
 
 An independent education-data portfolio project that investigates class imbalance, question and domain variation, answer language, repeated inputs, and conflicting annotations in SciEntsBank. My work in mathematics and science education motivates the question: what evidence is available in a short response, and what limitations should be understood before using an automated classifier?
 
-**Current scope: data preparation, auditing, exploratory analysis, and reproducible reporting.** Model training and application development are deferred. Every number and figure in this release is computed from the public source data; no prediction accuracy or learning-impact result is claimed.
+**Current scope: data preparation, auditing, exploratory analysis, question-grouped development splitting, and reproducible reporting.** Model training and application development are deferred. Every number and figure in this release is computed from the public source data; no prediction accuracy or learning-impact result is claimed.
 
 ## Start here
 
 - [Executed dataset-audit notebook](notebooks/00_dataset_audit.ipynb)
 - [Executed exploratory-analysis notebook — all 14 figures](notebooks/01_exploratory_analysis.ipynb)
-- [Visual report — all 14 figures with interpretation](reports/analysis_report.md)
+- [Executed split-design notebook](notebooks/02_split_design.ipynb)
+- [Split protocol, duplicate policy, and final-fit caveats](docs/split_design.md)
+- [Three split-diagnostic figures](reports/splits/README.md)
+- [Visual report — all 14 exploratory figures with interpretation](reports/analysis_report.md)
 - [Data files, dictionary, attribution, and license](data/README.md)
 - [Analysis methods and limits](METHODS.md)
 - [Machine-readable audit summary](reports/tables/audit_summary.json)
 
 [Open the audit in Colab](https://colab.research.google.com/github/Junghwan0516/science-answer-benchmark/blob/main/notebooks/00_dataset_audit.ipynb) · [Open the EDA in Colab](https://colab.research.google.com/github/Junghwan0516/science-answer-benchmark/blob/main/notebooks/01_exploratory_analysis.ipynb)
+
+## Development split ready; model training next
+
+[Open split design in Colab](https://colab.research.google.com/github/Junghwan0516/science-answer-benchmark/blob/main/notebooks/02_split_design.ipynb)
+
+| Internal partition | Whole questions | Answer records | Non-domain support |
+|---|---:|---:|---:|
+| Fit | 95 | 3,536 | 17 |
+| Development | 20 | 715 | 3 |
+| Calibration | 20 | 718 | 3 |
+
+Assignments use only official training records. They have zero pairwise overlap in answer IDs, question IDs, and normalized complete inputs. The deterministic first-eligible allocation uses seed 42 and class-support/size constraints; no model score enters selection. Three rare-class records still provide very limited evidence. All rows and labels are retained; optional fit-only inverse-input weights are prepared for a future sensitivity experiment.
+
+**The final-fit recipe is not yet frozen.** A classifier fitted only on the 95 fit questions would see only some official-UA questions. Before official test evaluation, document either full-training refit with cross-fitted calibration or the actual seen/held-out-question coverage of a retained split model. See the [full protocol](docs/split_design.md).
 
 ## Questions investigated
 
@@ -82,26 +99,29 @@ From this project directory, with Python 3.12:
 ```bash
 python -m pip install -r requirements.txt
 python scripts/build_analysis.py
+python scripts/build_splits.py
 python scripts/verify_release.py
+python -m unittest discover -s tests -v
 ```
 
-To regenerate and execute both notebooks:
+To regenerate and execute all three notebooks:
 
 ```bash
 python scripts/prepare_notebooks.py
+python scripts/prepare_split_notebook.py
 # If a network-based Jupyter kernel is unavailable:
 python scripts/prepare_notebooks.py --in-process
 ```
 
-The committed notebook outputs were executed in order with IPython in-process execution.
+The audit and EDA notebook outputs were executed with IPython in-process execution. The split notebook was executed sequentially with Python and captured stdout/raw-MIME displays. All outputs are computed.
 
 The bundled source subset allows offline data analysis after dependencies are installed. Colab notebooks locate the project automatically and clone this public repository if needed. The pipeline preserves source text and labels, exports all official partitions, validates expected sizes, and rebuilds CSV tables plus PNG figures. [Provenance](data/provenance.json) and [checksums](checksums.sha256) record exactly which data and files were used.
 
 ## Interpretation limits and next work
 
-This descriptive study does not measure automatic grading quality, student learning, or teacher time savings. Future model work would need question-grouped development partitions, explicit class supports, duplicate-handling sensitivity analysis, and independently reported UA/UQ/UD results. The rare class and small numbers of evaluation questions/domains limit reliable generalization claims.
+This descriptive study does not measure automatic grading quality, student learning, or teacher time savings. Question-grouped development partitions are now available. Future model work still needs explicit class supports, duplicate-handling sensitivity analysis, a frozen final-fit/calibration recipe, and independently reported UA/UQ/UD results. The rare class and small numbers of evaluation questions/domains limit reliable generalization claims.
 
-The next analysis task is to review the flagged input/label conflicts in context and document a policy before any model development. Original annotations remain unchanged in this release.
+The next task is `03_classical_baselines.ipynb`: fit classical models using the versioned assignments, select settings on development only, and reserve calibration for probabilities. The duplicate/conflict policy is now documented; original rows and labels remain unchanged. No classifier has been fitted in this release.
 
 ## Sources and license
 

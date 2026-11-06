@@ -46,11 +46,22 @@ def verify():
     nb=json.loads((ROOT/'notebooks/01_exploratory_analysis.ipynb').read_text())
     images=sum('image/png' in o.get('data',{}) for c in nb['cells'] if c['cell_type']=='code' for o in c['outputs'])
     assert images==14,images
+    from build_splits import verify_split
+    verify_split(ROOT)
+    split_nb=json.loads((ROOT/'notebooks/02_split_design.ipynb').read_text())
+    split_cells=[c for c in split_nb['cells'] if c['cell_type']=='code']
+    assert all(c['execution_count'] is not None for c in split_cells)
+    assert not any(o['output_type']=='error' for c in split_cells for o in c['outputs'])
+    assert sum('image/png' in o.get('data',{}) for c in split_cells for o in c['outputs'])==3
+    for file in ['01_partition_sizes.png','02_class_support.png','03_domain_question_support.png']:
+        with Image.open(ROOT/'reports/splits/figures'/file) as image:
+            assert image.width>=1000 and image.height>=600
+            image.verify()
     checksums=ROOT/'checksums.sha256'
     if checksums.exists():
         for line in checksums.read_text().splitlines():
             digest,path=line.split('  ',1)
             assert hashlib.sha256((ROOT/path).read_bytes()).hexdigest()==digest,path
-    print('PASS: four CSV splits, labels, input audit, 331 XML files, 14 figures, both executed notebooks, 14 embedded plots, and available checksums.')
+    print('PASS: four CSV splits, labels, input audit, 331 XML files, 14 figures, three executed notebooks, 17 embedded plots, split diagnostics, and available checksums.')
 
 if __name__=='__main__':verify()

@@ -51,3 +51,9 @@ Input-hash normalization uses Unicode NFKC, case folding, and collapsing whitesp
 `correct`, `partially_correct_incomplete`, `contradictory`, `irrelevant`, `non_domain`.
 
 These are corpus annotations in the context of a question and reference. They are not diagnoses of a learner's ability. Annotation conflicts and low-support classes must be considered when interpreting future model results.
+
+## Internal development assignments
+
+`data/splits/v1/answer_assignments.csv` assigns the 4,969 official training records to fit, development, and calibration by whole question. Join on `sample_id` with one-to-one validation. `question_assignments.csv` records the 135 question allocations. `protocol.json` pins the training-input SHA-256, seed, constraints, accepted candidate, and assignment hashes. No official test data enter this allocation.
+
+Additional assignment columns: `internal_split` (fit/development/calibration), `input_multiplicity` (number of official training records sharing the complete normalized input), `has_conflicting_labels` (whether that input has multiple original labels), `primary_sample_weight` (always one), and `sensitivity_fit_weight` (optional inverse-input-multiplicity weights for fit rows only; empty elsewhere). Sensitivity weights are prepared, not applied to a model. See [split protocol](../docs/split_design.md).

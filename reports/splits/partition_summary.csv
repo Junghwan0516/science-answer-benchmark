@@ -1,0 +1,4 @@
+internal_split,answer_count,question_count,unique_inputs,conflicting_rows,answer_percentage,question_percentage
+fit,3536,95,3438,15,71.16119943650634,70.37037037037037
+development,715,20,702,0,14.389213121352384,14.814814814814815
+calibration,718,20,686,0,14.449587442141276,14.814814814814815

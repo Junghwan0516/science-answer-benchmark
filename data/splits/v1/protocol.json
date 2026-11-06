@@ -1,0 +1,44 @@
+{
+  "version": "question-grouped-v1",
+  "source_training_sha256": "4654218036087a13d8e15e83d6060a60729f32a734c8f61720513e3e897d42e2",
+  "source_records": 4969,
+  "source_questions": 135,
+  "algorithm": "PCG64 permutation of lexically sorted question IDs; accept first eligible candidate",
+  "seed": 42,
+  "accepted_candidate": 5,
+  "max_candidates": 1000,
+  "question_counts": {
+    "fit": 95,
+    "development": 20,
+    "calibration": 20
+  },
+  "eligibility": {
+    "minimum_per_class_fit": 10,
+    "minimum_per_class_development": 3,
+    "minimum_per_class_calibration": 3,
+    "development_and_calibration_answer_fraction": [
+      0.12,
+      0.18
+    ]
+  },
+  "candidate_selection_inputs": [
+    "official training question IDs",
+    "official training label counts",
+    "official training record counts"
+  ],
+  "official_test_files_read": false,
+  "model_training_performed": false,
+  "primary_policy": "Preserve all original rows and labels with unit sample weights; group whole questions.",
+  "sensitivity_policy": "Optional future fit-only inverse complete-input multiplicity weights; never reweight development/calibration evaluation rows.",
+  "label_conflict_policy": "Flag and retain; no majority-vote relabelling or deletion.",
+  "limitations": [
+    "Non-domain has only three records in development and calibration; class-specific estimates are unstable.",
+    "This is question-disjoint development, not domain-disjoint development or verified learner-disjoint evaluation.",
+    "Candidate acceptance uses training labels, so this is constrained allocation, not unconstrained random sampling.",
+    "Known official test inventory and input-overlap audits preceded this protocol; no model scores were used."
+  ],
+  "assignment_sha256": {
+    "answer_assignments.csv": "ee1312fe017bb559fdda54e7b31846e1b89db3797abfb6ae3a0b7c20a53da5fa",
+    "question_assignments.csv": "cbf9d4e4d8e494d89a7d3ab81ef51676b9f36ae89c779fb0073ea4b2f54079d7"
+  }
+}
