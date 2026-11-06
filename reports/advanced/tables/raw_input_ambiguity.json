@@ -1,0 +1,8 @@
+{
+  "raw_input_groups": 4827,
+  "conflicting_raw_input_groups": 6,
+  "minimum_training_label_disagreements": 6,
+  "training_records": 4969,
+  "minimum_training_disagreement_percentage": 0.12074864157778226,
+  "interpretation": "Empirical constraint for deterministic predictions on exactly identical raw question/reference/answer triples; not population Bayes error or test performance."
+}

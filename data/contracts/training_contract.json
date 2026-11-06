@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "source": "data/processed/train.csv",
+  "expected_records": 4969,
+  "expected_questions": 135,
+  "expected_domains": 12,
+  "primary_key": "sample_id",
+  "labels": ["correct", "partially_correct_incomplete", "irrelevant", "contradictory", "non_domain"],
+  "official_split": "train",
+  "text_fields_must_be_nonempty": ["question_text", "reference_answer", "student_answer"],
+  "features_primary_key": "sample_id",
+  "feature_coverage": "Exactly one feature row for each training answer",
+  "development_assignment_coverage": "Exactly one assignment for each training answer",
+  "question_context_consistency": "One domain, question text, and reference answer per question_id",
+  "sql_constraints": "sql/01_schema.sql",
+  "scope": "Contract for this pinned corpus release; not a universal educational data schema"
+}

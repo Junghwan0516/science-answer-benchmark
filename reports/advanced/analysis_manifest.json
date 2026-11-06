@@ -1,0 +1,24 @@
+{
+  "training_only": true,
+  "bootstrap_seed": 2026,
+  "bootstrap_replicates": 2000,
+  "bootstrap_unit": "question_id",
+  "feature_rows": 4969,
+  "feature_columns": 12,
+  "fit_vocabulary_types": 2041,
+  "development_tokens": 7565,
+  "development_unseen_tokens": 343,
+  "calibration_vocabulary_analyzed": false,
+  "official_test_files_read": false,
+  "model_training_performed": false,
+  "source_sha256": "4654218036087a13d8e15e83d6060a60729f32a734c8f61720513e3e897d42e2",
+  "assignment_sha256": "ee1312fe017bb559fdda54e7b31846e1b89db3797abfb6ae3a0b7c20a53da5fa",
+  "raw_input_ambiguity": {
+    "raw_input_groups": 4827,
+    "conflicting_raw_input_groups": 6,
+    "minimum_training_label_disagreements": 6,
+    "training_records": 4969,
+    "minimum_training_disagreement_percentage": 0.12074864157778226,
+    "interpretation": "Empirical constraint for deterministic predictions on exactly identical raw question/reference/answer triples; not population Bayes error or test performance."
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "contract_version": "1.0",
+  "all_passed": true,
+  "table_counts": {
+    "domains": 12,
+    "labels": 5,
+    "questions": 135,
+    "answers": 4969,
+    "answer_features": 4969,
+    "development_assignments": 4969
+  },
+  "checks": [
+    "source record/question/domain counts",
+    "source primary key and allowed labels",
+    "nonempty source text",
+    "single context per question",
+    "feature primary key and complete one-to-one coverage",
+    "finite/range-constrained features",
+    "word-count and reference-overlap reconciliation",
+    "development assignment preservation and disjointness",
+    "SQLite primary/foreign/check constraints",
+    "SQLite foreign-key and integrity checks",
+    "SQL/Pandas label-count reconciliation",
+    "SQL/Pandas question-count reconciliation"
+  ],
+  "official_test_files_read": false,
+  "model_training_performed": false
+}

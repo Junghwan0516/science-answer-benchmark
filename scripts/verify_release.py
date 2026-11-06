@@ -57,11 +57,34 @@ def verify():
         with Image.open(ROOT/'reports/splits/figures'/file) as image:
             assert image.width>=1000 and image.height>=600
             image.verify()
+    from build_warehouse import validate_features
+    validate_features(train,pd.read_csv(ROOT/'data/processed/training_features.csv'))
+    advanced=json.loads((ROOT/'reports/advanced/analysis_manifest.json').read_text())
+    assert advanced['source_sha256']==hashlib.sha256((ROOT/'data/processed/train.csv').read_bytes()).hexdigest()
+    assert advanced['assignment_sha256']==hashlib.sha256((ROOT/'data/splits/v1/answer_assignments.csv').read_bytes()).hexdigest()
+    assert advanced['official_test_files_read'] is False and advanced['model_training_performed'] is False
+    quality=json.loads((ROOT/'reports/engineering/quality_report.json').read_text())
+    assert quality['all_passed'] and len(quality['checks'])==12
+    lineage=json.loads((ROOT/'reports/engineering/lineage.json').read_text())
+    for name,digest in lineage['inputs_sha256'].items():
+        assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==digest,name
+    figures=list((ROOT/'reports/advanced/figures').glob('*.png'))
+    assert len(figures)==7
+    for path in figures:
+        with Image.open(path) as image:
+            assert image.width>=1000 and image.height>=400
+            image.verify()
+    for name,expected_images in [('01b_statistical_analysis',7),('02b_data_pipeline',0)]:
+        notebook=json.loads((ROOT/f'notebooks/{name}.ipynb').read_text())
+        cells=[c for c in notebook['cells'] if c['cell_type']=='code']
+        assert all(c['execution_count'] is not None for c in cells)
+        assert not any(o['output_type']=='error' for c in cells for o in c['outputs'])
+        assert sum('image/png' in o.get('data',{}) for c in cells for o in c['outputs'])==expected_images
     checksums=ROOT/'checksums.sha256'
     if checksums.exists():
         for line in checksums.read_text().splitlines():
             digest,path=line.split('  ',1)
             assert hashlib.sha256((ROOT/path).read_bytes()).hexdigest()==digest,path
-    print('PASS: four CSV splits, labels, input audit, 331 XML files, 14 figures, three executed notebooks, 17 embedded plots, split diagnostics, and available checksums.')
+    print('PASS: original data/splits preserved; 24 figures, five executed notebooks, feature contracts, SQL lineage, and release checksums verified.')
 
 if __name__=='__main__':verify()

@@ -36,3 +36,7 @@ This release supports dataset understanding. Teacher time savings, learning gain
 ## Versioned development split
 
 Question-grouped development assignments are now available in `data/splits/v1`. The builder reads only `data/processed/train.csv`; it uses seed 42 and a first-eligible candidate rule based on training class counts and partition sizes. The resulting 95/20/20 questions contain 3,536/715/718 answer records. Primary data and labels are preserved. Full policy, overlap checks, minority-support limits, and the pending final-fit/calibration decision are documented in [docs/split_design.md](docs/split_design.md). This split design does not itself train a model or establish official benchmark performance.
+
+## Statistical and engineering extension
+
+The extension adds 2,000-replicate question-cluster resampling, explicit answer/question/domain weighting, a short-answer slice, numeric-feature redundancy diagnostics, and fit-to-development vocabulary novelty. Raw-input conflicts are distinguished from normalized-input conflicts. These remain descriptive analyses, not prediction scores. Full estimands, tokenization, resampling scope, limitations, and provenance are specified in [advanced analysis methods](docs/advanced_analysis.md). Contracts, SQL normalization, atomic warehouse rebuilds, count reconciliation, and verification are documented in [data engineering](docs/data_engineering.md). No original observations, official evaluation files, or v1 split assignments are changed.

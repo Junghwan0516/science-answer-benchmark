@@ -4,13 +4,27 @@
 
 An independent education-data portfolio project that investigates class imbalance, question and domain variation, answer language, repeated inputs, and conflicting annotations in SciEntsBank. My work in mathematics and science education motivates the question: what evidence is available in a short response, and what limitations should be understood before using an automated classifier?
 
-**Current scope: data preparation, auditing, exploratory analysis, question-grouped development splitting, and reproducible reporting.** Model training and application development are deferred. Every number and figure in this release is computed from the public source data; no prediction accuracy or learning-impact result is claimed.
+**Current scope: data preparation, auditing, exploratory analysis, question-grouped development splitting, cluster-resampling statistics, and a validated SQL data pipeline.** Model training and application development are deferred. Every number and figure in this release is computed from the public source data; no prediction accuracy or learning-impact result is claimed.
+
+## Three perspectives, backed by executable work
+
+| Perspective | Work demonstrated | Evidence |
+|---|---|---|
+| Data Analyst | Group comparisons, explicit denominators, SQL reports, and clear findings | [Advanced visual report](reports/advanced/README.md) |
+| Data Scientist | Question-cluster resampling, feature redundancy, vocabulary novelty, and annotation ambiguity | [Statistical notebook](notebooks/01b_statistical_analysis.ipynb) |
+| Data Engineering | Data contracts, six relational tables, four SQL views, atomic rebuilds, lineage, and automated integrity checks | [Pipeline notebook](notebooks/02b_data_pipeline.ipynb) |
+
+The repository now contains **five executed notebooks, 24 analytical/diagnostic figures, a 4,969-row feature table, and a reproducible local batch pipeline**. It does not claim production deployment or model performance.
 
 ## Start here
 
 - [Executed dataset-audit notebook](notebooks/00_dataset_audit.ipynb)
 - [Executed exploratory-analysis notebook — all 14 figures](notebooks/01_exploratory_analysis.ipynb)
 - [Executed split-design notebook](notebooks/02_split_design.ipynb)
+- [Executed statistical-analysis notebook](notebooks/01b_statistical_analysis.ipynb)
+- [Executed data-contract and SQL notebook](notebooks/02b_data_pipeline.ipynb)
+- [Statistical methods and feature definitions](docs/advanced_analysis.md)
+- [Engineering architecture and rebuild instructions](docs/data_engineering.md)
 - [Split protocol, duplicate policy, and final-fit caveats](docs/split_design.md)
 - [Three split-diagnostic figures](reports/splits/README.md)
 - [Visual report — all 14 exploratory figures with interpretation](reports/analysis_report.md)
@@ -61,6 +75,19 @@ Repeated records can be legitimate independent submissions. Conflicting annotati
 
 ![Training class counts](reports/figures/01_class_distribution.png)
 
+## Added statistical and engineering findings
+
+- The fit vocabulary contains **2,041 lexical word types**. **343 of 7,565 development token occurrences (4.53%)** are absent from it; calibration and official test vocabulary are excluded from this diagnostic.
+- Exactly identical raw input triples form **4,827 groups**, including six label-conflicting groups. A deterministic predictor restricted to these inputs must disagree with at least six recorded training labels. This is an empirical label-consistency constraint, not model or test accuracy.
+- **2,000 whole-question bootstrap replicates** expose the effect of the resampling unit. Within-domain interval plots disclose question counts and suppress intervals for domains with fewer than five questions.
+- The warehouse contains **six constrained tables** and **four SQL views**. SQL answer/label/question totals reconcile with Pandas; **12 data-quality checks** and corruption/failure tests cover the pipeline.
+
+![Question-cluster resampling](reports/advanced/figures/01_cluster_resampling.png)
+
+![Feature redundancy](reports/advanced/figures/06_feature_redundancy.png)
+
+See [all seven new figures](reports/advanced/README.md), [SQL outputs and lineage](reports/engineering/README.md), and the [feature table](data/processed/training_features.csv).
+
 ## Domain variation
 
 Counts and percentages answer different questions. A domain with more responses can contribute more minority-class records without having the highest within-domain minority rate. The complete tables accompany every analysis.
@@ -104,7 +131,7 @@ python scripts/verify_release.py
 python -m unittest discover -s tests -v
 ```
 
-To regenerate and execute all three notebooks:
+To regenerate and execute the original notebooks:
 
 ```bash
 python scripts/prepare_notebooks.py
@@ -113,7 +140,15 @@ python scripts/prepare_split_notebook.py
 python scripts/prepare_notebooks.py --in-process
 ```
 
-The audit and EDA notebook outputs were executed with IPython in-process execution. The split notebook was executed sequentially with Python and captured stdout/raw-MIME displays. All outputs are computed.
+To rebuild the advanced analysis, local SQL warehouse, and two extension notebooks in one command:
+
+```bash
+python scripts/run_pipeline.py --stage advanced
+```
+
+Use `--stage full` to also rebuild the original source audit and v1 split. Intentional artifact changes require review before `--refresh-checksums`; ordinary validation does not accept changed hashes automatically. The warehouse binary is rebuilt locally rather than committed. A GitHub Actions workflow runs the advanced build and validation on pushes and pull requests.
+
+The audit and EDA notebooks were executed with IPython in-process execution. The split, statistical-analysis, and SQL notebooks were executed sequentially with Python and captured stdout/raw-MIME displays. All outputs are computed.
 
 The bundled source subset allows offline data analysis after dependencies are installed. Colab notebooks locate the project automatically and clone this public repository if needed. The pipeline preserves source text and labels, exports all official partitions, validates expected sizes, and rebuilds CSV tables plus PNG figures. [Provenance](data/provenance.json) and [checksums](checksums.sha256) record exactly which data and files were used.
 

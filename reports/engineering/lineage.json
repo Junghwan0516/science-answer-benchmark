@@ -1,0 +1,19 @@
+{
+  "warehouse": "data/warehouse/scientsbank.sqlite (locally rebuilt; not committed)",
+  "inputs_sha256": {
+    "data/processed/train.csv": "4654218036087a13d8e15e83d6060a60729f32a734c8f61720513e3e897d42e2",
+    "data/processed/training_features.csv": "476156be5b1765bbef4b6a228cd28f7213c6b0e353756d9051a5ab71365a59fd",
+    "data/splits/v1/answer_assignments.csv": "ee1312fe017bb559fdda54e7b31846e1b89db3797abfb6ae3a0b7c20a53da5fa",
+    "data/contracts/training_contract.json": "a106e3212296cb046d29cb1c5c27050a4fe58b5861bdc89553baae23637e587e",
+    "sql/01_schema.sql": "988f42359751fcdcb10672800cadf2ad75c69d28b7abf92881f28f1784f9627d",
+    "sql/02_analytics.sql": "f20e6cb48142bdde23a668f69eaa3e46f6950cd6bf5199986d2a32d8c7a4d141"
+  },
+  "source": "SciEntsBank official training Core only",
+  "transformations": [
+    "derive documented text features",
+    "preserve source text and labels",
+    "normalize question/answer/features/assignment tables",
+    "enforce relational constraints",
+    "materialize reconciled SQL report CSVs"
+  ]
+}
