@@ -1,10 +1,10 @@
-# Science Answer Benchmark — Data Analysis
+# Science Answer Benchmark
 
-**What can the data tell us before building a science short-answer classifier?**
+**Can a model recognize when a short science answer contradicts the reference on a question it has never seen?**
 
 An independent education-data portfolio project that investigates class imbalance, question and domain variation, answer language, repeated inputs, and conflicting annotations in SciEntsBank. My work in mathematics and science education motivates the question: what evidence is available in a short response, and what limitations should be understood before using an automated classifier?
 
-**Current scope: data preparation, auditing, exploratory analysis, question-grouped development splitting, cluster-resampling statistics, and a validated SQL data pipeline.** Model training and application development are deferred. Every number and figure in this release is computed from the public source data; no prediction accuracy or learning-impact result is claimed.
+**Current scope:** data preparation and auditing, a validated SQL pipeline, question-grouped model development, and evaluation of a frozen classifier. The model is a research prototype for English science answers.
 
 ## Three perspectives, backed by executable work
 
@@ -14,7 +14,13 @@ An independent education-data portfolio project that investigates class imbalanc
 | Data Scientist | Question-cluster resampling, feature redundancy, vocabulary novelty, and annotation ambiguity | [Statistical notebook](notebooks/01b_statistical_analysis.ipynb) |
 | Data Engineering | Data contracts, six relational tables, four SQL views, atomic rebuilds, lineage, and automated integrity checks | [Pipeline notebook](notebooks/02b_data_pipeline.ipynb) |
 
-The repository now contains **five executed notebooks, 24 analytical/diagnostic figures, a 4,969-row feature table, and a reproducible local batch pipeline**. It does not claim production deployment or model performance.
+The repository now contains **five executed notebooks, 24 analytical/diagnostic figures, a 4,969-row feature table, and a reproducible local batch pipeline**. A sixth executed notebook adds model comparison and error analysis.
+
+## Model result
+
+On 715 development answers from 20 unseen questions, directly comparing student and reference answers raised macro F1 from **0.237 to 0.413** relative to concatenated TF-IDF. Contradictions labelled as correct fell from **51 to 27 of 74**. The frozen classifier was evaluated separately on the official UA, UQ, and UD partitions. On calibration data, no threshold met the two review criteria, so the policy routes every answer to human review.
+
+[Executed model notebook](notebooks/03_classical_baselines.ipynb) · [Open in Colab](https://colab.research.google.com/github/Junghwan0516/science-answer-benchmark/blob/main/notebooks/03_classical_baselines.ipynb) · [Results, figures, and reproduction](reports/models/README.md) · [Manual error review](reports/models/ERROR_REVIEW.md)
 
 ## Start here
 
@@ -34,7 +40,7 @@ The repository now contains **five executed notebooks, 24 analytical/diagnostic 
 
 [Open the audit in Colab](https://colab.research.google.com/github/Junghwan0516/science-answer-benchmark/blob/main/notebooks/00_dataset_audit.ipynb) · [Open the EDA in Colab](https://colab.research.google.com/github/Junghwan0516/science-answer-benchmark/blob/main/notebooks/01_exploratory_analysis.ipynb)
 
-## Development split ready; model training next
+## Question-grouped development split
 
 [Open split design in Colab](https://colab.research.google.com/github/Junghwan0516/science-answer-benchmark/blob/main/notebooks/02_split_design.ipynb)
 
@@ -46,7 +52,7 @@ The repository now contains **five executed notebooks, 24 analytical/diagnostic 
 
 Assignments use only official training records. They have zero pairwise overlap in answer IDs, question IDs, and normalized complete inputs. The deterministic first-eligible allocation uses seed 42 and class-support/size constraints; no model score enters selection. Three rare-class records still provide very limited evidence. All rows and labels are retained; optional fit-only inverse-input weights are prepared for a future sensitivity experiment.
 
-**The final-fit recipe is not yet frozen.** A classifier fitted only on the 95 fit questions would see only some official-UA questions. Before official test evaluation, document either full-training refit with cross-fitted calibration or the actual seen/held-out-question coverage of a retained split model. See the [full protocol](docs/split_design.md).
+**The v1 model retains the 95-question fit split.** It saw 95 of the 135 questions in official UA during fitting. See the [split design protocol](docs/split_design.md) and [v1 model report](reports/models/README.md) for the distinction between the original task splits and this fit recipe.
 
 ## Questions investigated
 
@@ -150,13 +156,13 @@ Use `--stage full` to also rebuild the original source audit and v1 split. Inten
 
 The audit and EDA notebooks were executed with IPython in-process execution. The split, statistical-analysis, and SQL notebooks were executed sequentially with Python and captured stdout/raw-MIME displays. All outputs are computed.
 
-The bundled source subset allows offline data analysis after dependencies are installed. Colab notebooks locate the project automatically and clone this public repository if needed. The pipeline preserves source text and labels, exports all official partitions, validates expected sizes, and rebuilds CSV tables plus PNG figures. [Provenance](data/provenance.json) and [checksums](checksums.sha256) record exactly which data and files were used.
+The bundled source subset allows offline data analysis after dependencies are installed. The original data notebooks locate the project automatically and clone this public repository if needed. The model notebook requires the updated checkout in the runtime. The pipeline preserves source text and labels, exports all official partitions, validates expected sizes, and rebuilds CSV tables plus PNG figures. [Provenance](data/provenance.json) and [checksums](checksums.sha256) record exactly which data and files were used.
 
 ## Interpretation limits and next work
 
-This descriptive study does not measure automatic grading quality, student learning, or teacher time savings. Question-grouped development partitions are now available. Future model work still needs explicit class supports, duplicate-handling sensitivity analysis, a frozen final-fit/calibration recipe, and independently reported UA/UQ/UD results. The rare class and small numbers of evaluation questions/domains limit reliable generalization claims.
+The benchmark measures agreement with historical corpus annotations. It does not measure educational outcomes or teacher time savings. Rare labels and small numbers of evaluation questions or domains limit generalization.
 
-The next task is `03_classical_baselines.ipynb`: fit classical models using the versioned assignments, select settings on development only, and reserve calibration for probabilities. The duplicate/conflict policy is now documented; original rows and labels remain unchanged. No classifier has been fitted in this release.
+Future work can use development errors to test duplicate-weight sensitivity and semantic comparison models. The v1 official results should remain a fixed reference.
 
 ## Sources and license
 

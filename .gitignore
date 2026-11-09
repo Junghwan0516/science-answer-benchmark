@@ -3,3 +3,7 @@ __pycache__/
 source.zip
 .venv/
 data/warehouse/
+
+artifacts/
+
+.model-run/

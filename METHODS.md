@@ -6,7 +6,7 @@ One student-answer record to one science question. An answer identifier is not t
 
 ## Scope
 
-The source is the English SciEntsBank five-way Core release. Descriptive statistics and 14 figures use only the 4,969 official training answers. Official test partitions are included as separate CSV exports, with inventory and complete-input overlap checks. No model is trained, no test predictions are generated, and no model selection is performed.
+The source is the English SciEntsBank five-way Core release. Descriptive statistics and 14 figures use only the 4,969 official training answers. Official test partitions are included as separate CSV exports, with inventory and complete-input overlap checks. This data audit does not train models or generate predictions. The separate modelling stage is described below.
 
 ## Data quality
 
@@ -40,3 +40,7 @@ Question-grouped development assignments are now available in `data/splits/v1`. 
 ## Statistical and engineering extension
 
 The extension adds 2,000-replicate question-cluster resampling, explicit answer/question/domain weighting, a short-answer slice, numeric-feature redundancy diagnostics, and fit-to-development vocabulary novelty. Raw-input conflicts are distinguished from normalized-input conflicts. These remain descriptive analyses, not prediction scores. Full estimands, tokenization, resampling scope, limitations, and provenance are specified in [advanced analysis methods](docs/advanced_analysis.md). Contracts, SQL normalization, atomic warehouse rebuilds, count reconciliation, and verification are documented in [data engineering](docs/data_engineering.md). No original observations, official evaluation files, or v1 split assignments are changed.
+
+## Classical classifier and held-out evaluation
+
+The frozen v1 model uses fit-only TF-IDF, pair features, and logistic regression. Candidate selection uses question-held-out development fixed-five macro F1; calibration uses a separate set of questions. The original labels and duplicate rows remain intact. See the [model report](reports/models/README.md) for protocol, class support, official test results, and the review policy.

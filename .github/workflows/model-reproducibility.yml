@@ -1,0 +1,26 @@
+name: Model reproducibility
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify-model:
+    runs-on: ubuntu-latest
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements-model.txt
+      - run: python -m pip install -r requirements-model.txt
+      - name: Reproduce the frozen v1 study
+        run: |
+          python scripts/run_model_study.py freeze --work-dir .model-run/ci
+          python scripts/run_model_study.py evaluate --work-dir .model-run/ci
+          python scripts/analyze_model_errors.py .model-run/ci
+          python scripts/verify_model_run.py .model-run/ci/reports

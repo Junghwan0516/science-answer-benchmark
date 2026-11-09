@@ -1,0 +1,248 @@
+{
+  "development": {
+    "labels": [
+      "correct",
+      "partially_correct_incomplete",
+      "irrelevant",
+      "contradictory",
+      "non_domain"
+    ],
+    "concatenated_confusion": [
+      [
+        222,
+        55,
+        36,
+        1,
+        0
+      ],
+      [
+        60,
+        51,
+        36,
+        1,
+        0
+      ],
+      [
+        115,
+        27,
+        34,
+        0,
+        0
+      ],
+      [
+        51,
+        12,
+        10,
+        1,
+        0
+      ],
+      [
+        2,
+        0,
+        1,
+        0,
+        0
+      ]
+    ],
+    "pair_features_confusion": [
+      [
+        172,
+        68,
+        53,
+        21,
+        0
+      ],
+      [
+        40,
+        66,
+        38,
+        4,
+        0
+      ],
+      [
+        42,
+        53,
+        74,
+        7,
+        0
+      ],
+      [
+        27,
+        13,
+        22,
+        12,
+        0
+      ],
+      [
+        0,
+        0,
+        2,
+        0,
+        1
+      ]
+    ],
+    "question_cluster_sensitivity": {
+      "replicates": 4000,
+      "pair_minus_concatenated_macro_f1_95_percentile": [
+        0.04111897526220166,
+        0.29652337162889875
+      ],
+      "pair_minus_concatenated_false_correct_rate_95_percentile": [
+        -0.5082036676854682,
+        -0.1311297220242337
+      ],
+      "interpretation": "Descriptive sensitivity to question composition; does not account for model selection or fit variation."
+    }
+  },
+  "official": {
+    "UA": {
+      "fit_normalized_input_matches": 19,
+      "confusion": [
+        [
+          148,
+          49,
+          28,
+          8,
+          0
+        ],
+        [
+          30,
+          59,
+          19,
+          5,
+          0
+        ],
+        [
+          25,
+          24,
+          83,
+          1,
+          0
+        ],
+        [
+          20,
+          11,
+          9,
+          18,
+          0
+        ],
+        [
+          0,
+          2,
+          1,
+          0,
+          0
+        ]
+      ],
+      "by_fit_question_exposure": {
+        "seen": {
+          "answers": 380,
+          "questions": 95,
+          "accuracy": 0.5894736842105263,
+          "macro_f1_fixed_five": 0.435336550811506,
+          "macro_f1_supported_only": 0.435336550811506,
+          "contradictory_support": 37,
+          "contradictory_predicted_correct": 12
+        },
+        "not_seen": {
+          "answers": 160,
+          "questions": 40,
+          "accuracy": 0.525,
+          "macro_f1_fixed_five": 0.3943118566526878,
+          "macro_f1_supported_only": 0.49288982081585975,
+          "contradictory_support": 21,
+          "contradictory_predicted_correct": 8
+        }
+      },
+      "excluding_fit_input_matches": {
+        "answers": 521,
+        "questions": 135,
+        "accuracy": 0.5719769673704415,
+        "macro_f1_fixed_five": 0.4254997857167201,
+        "macro_f1_supported_only": 0.4254997857167201,
+        "contradictory_support": 57,
+        "contradictory_predicted_correct": 19
+      }
+    },
+    "UQ": {
+      "fit_normalized_input_matches": 0,
+      "confusion": [
+        [
+          160,
+          22,
+          75,
+          44,
+          0
+        ],
+        [
+          66,
+          37,
+          44,
+          28,
+          0
+        ],
+        [
+          56,
+          34,
+          77,
+          26,
+          0
+        ],
+        [
+          26,
+          7,
+          13,
+          18,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "UD": {
+      "fit_normalized_input_matches": 0,
+      "confusion": [
+        [
+          1239,
+          365,
+          250,
+          63,
+          0
+        ],
+        [
+          324,
+          311,
+          297,
+          54,
+          0
+        ],
+        [
+          354,
+          271,
+          545,
+          52,
+          0
+        ],
+        [
+          140,
+          77,
+          75,
+          125,
+          0
+        ],
+        [
+          0,
+          1,
+          5,
+          0,
+          14
+        ]
+      ]
+    }
+  }
+}
