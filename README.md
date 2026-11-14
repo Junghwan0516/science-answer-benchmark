@@ -4,23 +4,29 @@
 
 An independent education-data portfolio project that investigates class imbalance, question and domain variation, answer language, repeated inputs, and conflicting annotations in SciEntsBank. My work in mathematics and science education motivates the question: what evidence is available in a short response, and what limitations should be understood before using an automated classifier?
 
-**Current scope:** data preparation and auditing, a validated SQL pipeline, question-grouped model development, and evaluation of a frozen classifier. The model is a research prototype for English science answers.
+**Current scope:** data preparation and auditing, a validated SQL pipeline, question-grouped model development, and evaluation of classical classifiers and a fine-tuned MiniLM. The model is a research prototype for English science answers.
 
-## Three perspectives, backed by executable work
+## Portfolio at a glance
 
-| Perspective | Work demonstrated | Evidence |
-|---|---|---|
-| Data Analyst | Group comparisons, explicit denominators, SQL reports, and clear findings | [Advanced visual report](reports/advanced/README.md) |
-| Data Scientist | Question-cluster resampling, feature redundancy, vocabulary novelty, and annotation ambiguity | [Statistical notebook](notebooks/01b_statistical_analysis.ipynb) |
-| Data Engineering | Data contracts, six relational tables, four SQL views, atomic rebuilds, lineage, and automated integrity checks | [Pipeline notebook](notebooks/02b_data_pipeline.ipynb) |
+| Stage | What to inspect |
+|---|---|
+| Explore the data | [14 EDA figures and tables](reports/analysis_report.md) · [Statistical analysis: seven figures](reports/advanced/README.md) |
+| Validate the pipeline | [SQL, schema and data checks](reports/engineering/README.md) · [Question-level splits](reports/splits/README.md) · [Data dictionary](data/README.md) |
+| Compare models | [Classical baselines](reports/models/README.md) · [MiniLM fine-tuning and UQ evaluation](reports/nli/README.md) |
 
-The repository now contains **five executed notebooks, 24 analytical/diagnostic figures, a 4,969-row feature table, and a reproducible local batch pipeline**. A sixth executed notebook adds model comparison and error analysis.
+## What changed after fine-tuning?
 
-## Model result
+On **733 answers across 15 unseen science questions**, MiniLM fine-tuning improved overall classification and correct-answer recall, but made the model more likely to label a contradiction as correct.
 
-On 715 development answers from 20 unseen questions, directly comparing student and reference answers raised macro F1 from **0.237 to 0.413** relative to concatenated TF-IDF. Contradictions labelled as correct fell from **51 to 27 of 74**. The frozen classifier was evaluated separately on the official UA, UQ, and UD partitions. On calibration data, no threshold met the two review criteria, so the policy routes every answer to human review.
+![Unseen-question metrics comparing zero-shot and fine-tuned MiniLM](reports/nli/uq_metrics.svg)
 
-[Executed model notebook](notebooks/03_classical_baselines.ipynb) · [Open in Colab](https://colab.research.google.com/github/Junghwan0516/science-answer-benchmark/blob/main/notebooks/03_classical_baselines.ipynb) · [Results, figures, and reproduction](reports/models/README.md) · [Manual error review](reports/models/ERROR_REVIEW.md)
+| Official UQ metric | Zero-shot | Fine-tuned |
+|---|---:|---:|
+| Macro F1 (three classes) | 0.415 | **0.580** |
+| Correct-answer recall | 20.6% (62/301) | **70.4% (212/301)** |
+| Contradictions classified as correct | **10.9% (7/64)** | 29.7% (19/64) |
+
+No threshold met the preset review criteria on separate calibration data. The fixed policy therefore sent all 733 UQ answers to human review. See the [full report](reports/nli/README.md) for confusion matrices, calibration tradeoffs, example errors, and the paired prediction table.
 
 ## Start here
 
