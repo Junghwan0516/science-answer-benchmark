@@ -1,0 +1,102 @@
+{
+  "dataset_revision": "ed019d5fd32292198ccd400e03da1248a5174201",
+  "split": "test-unseen-questions",
+  "questions": 15,
+  "split_audit": [
+    {
+      "internal_split": "calibration",
+      "question_id_overlap": 0,
+      "normalized_input_overlap": 0
+    },
+    {
+      "internal_split": "development",
+      "question_id_overlap": 0,
+      "normalized_input_overlap": 0
+    },
+    {
+      "internal_split": "fit",
+      "question_id_overlap": 0,
+      "normalized_input_overlap": 0
+    }
+  ],
+  "gold_counts": {
+    "neutral": 368,
+    "entailment": 301,
+    "contradiction": 64
+  },
+  "base_model": "cross-encoder/nli-MiniLM2-L6-H768",
+  "base_revision": "b95119ce93d3e065de6214e38cd4a97b0f2f2c6d",
+  "labels": [
+    "contradiction",
+    "entailment",
+    "neutral"
+  ],
+  "checkpoint_weights_sha256": "fb707624e55f6c01bd9d0d24a2cbb26c816287bfe0cb26f7de240ebab1f503a3",
+  "torch_version": "2.14.1+cpu",
+  "transformers_version": "4.57.6",
+  "device": "cpu",
+  "max_length": 256,
+  "metrics": {
+    "zero_shot": {
+      "answers": 733,
+      "macro_f1": 0.4151591392527907,
+      "correct_recalled": 62,
+      "gold_correct": 301,
+      "correct_recall": 0.2059800664451827,
+      "contradictions_marked_correct": 7,
+      "gold_contradictions": 64,
+      "contradiction_to_entailment_rate": 0.109375,
+      "confusion_matrix": [
+        [
+          29,
+          7,
+          28
+        ],
+        [
+          26,
+          62,
+          213
+        ],
+        [
+          48,
+          55,
+          265
+        ]
+      ]
+    },
+    "fine_tuned": {
+      "answers": 733,
+      "macro_f1": 0.5800529397927366,
+      "correct_recalled": 212,
+      "gold_correct": 301,
+      "correct_recall": 0.7043189368770764,
+      "contradictions_marked_correct": 19,
+      "gold_contradictions": 64,
+      "contradiction_to_entailment_rate": 0.296875,
+      "confusion_matrix": [
+        [
+          19,
+          19,
+          26
+        ],
+        [
+          2,
+          212,
+          87
+        ],
+        [
+          6,
+          119,
+          243
+        ]
+      ]
+    }
+  },
+  "policy": {
+    "decision": "Needs review",
+    "auto_accepted": 0,
+    "coverage": 0.0,
+    "auto_accept_precision": null,
+    "review_required": 733
+  }
+}
